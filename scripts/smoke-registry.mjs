@@ -29,7 +29,12 @@ try {
   run(process.execPath, ['-e', [
     "const scoped = require('@stackline/source-map-resolve')",
     "const alias = require('source-map-resolve')",
-    "if (scoped.resolveSync !== alias.resolveSync) process.exit(1)"
+    "const expected = ['resolveSourceMap','resolveSourceMapSync','resolveSources','resolveSourcesSync','resolve','resolveSync','parseMapToJSON']",
+    "if (JSON.stringify(Object.keys(scoped)) !== JSON.stringify(expected)) process.exit(1)",
+    "if (JSON.stringify(Object.keys(alias)) !== JSON.stringify(expected)) process.exit(1)",
+    "const code = '//# sourceMappingURL=app.js.map'",
+    "const read = url => /[.]map$/.test(url) ? '{\"version\":3,\"sources\":[\"input.js\"],\"sourcesContent\":[\"ok\"],\"mappings\":\"\"}' : 'ok'",
+    "if (JSON.stringify(scoped.resolveSync(code, 'https://example.test/app.js', read)) !== JSON.stringify(alias.resolveSync(code, 'https://example.test/app.js', read))) process.exit(1)"
   ].join(';')])
 } finally {
   await rm(temporary, { force: true, recursive: true })
