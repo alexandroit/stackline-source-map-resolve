@@ -52,17 +52,23 @@ The preparation script refuses to overwrite this directory.
 - Official npm reports public access and the `latest` dist-tag as `1.0.0`.
 - Immediately after publication, anonymous packument reads returned a
   transient CDN `E404` while the public tarball, authenticated dist-tag, and
-  access endpoints were already available. Continue retrying anonymous
-  metadata and clean consumer installation; never republish the version.
+  access endpoints were already available. Propagation completed without a
+  second publish; metadata and clean scoped/alias consumers then passed.
 
-## Remaining external gates
+## Completed external gates — 2026-08-27
 
-- Execute the checked-in Ubuntu/Windows Node 12, 14, 16, 18, 20, 22, and 24 CI
-  matrix in a future authorized GitHub repository.
-- Install this exact digest in each adoption target and run that consumer's own
-  build and tests. Existing ambient type declarations are not assumed removable.
-- `Raku/nqp` remains blocked while it supports Node 10.10; this package requires
-  Node 12 or newer.
-- Create the public repository and immutable GitHub release, deploy and verify
-  production documentation, complete official-registry clean consumers after
-  metadata propagation, and contact only the qualified downstream targets.
+- GitHub release-source and final documentation commits passed CI and CodeQL.
+  CI exercises Ubuntu and Windows across Node 12, 14, 16, 18, 20, 22, and 24.
+- The immutable GitHub release contains eight uploaded assets. Its downloaded
+  tarball is byte-identical to the local, Verdaccio, and official npm bytes.
+- The production docs, bundled workbench, catalog, search, selector, copy
+  action, responsive layouts, robots, canonical/structured metadata, and both
+  aggregate sitemaps pass.
+- The exact alias migration in `microsoft/vscode-react-native` passed install,
+  build, focused resolver, full test, and localization gates before PR #2900.
+  Its existing ambient declaration remains intentionally.
+- A different qualified repository received issue #1446 for the maintainer
+  decision requested by its contribution policy.
+
+`Raku/nqp` remains ineligible while it supports Node 10.10. Published status
+does not relax downstream compatibility or contact gates.
