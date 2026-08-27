@@ -53,4 +53,10 @@ const result = browserModule.resolveSync(code, 'https://example.test/app.js', ()
 assert.equal(result.sourcesResolved[0], 'https://example.test/input.ts')
 assert.equal(browserModule.default.resolveSync, browserModule.resolveSync)
 
+const workbenchMatch = html.match(/<textarea id="code"[^>]*>([\s\S]*?)<\/textarea>/)
+assert.ok(workbenchMatch, 'the browser workbench needs a default source-map example')
+const workbenchResult = browserModule.resolveSync(workbenchMatch[1], 'https://example.test/assets/app.js', () => '')
+assert.equal(workbenchResult.sourcesResolved[0], 'https://example.test/assets/input.ts')
+assert.equal(workbenchResult.sourcesContent[0], "console.log('hello')")
+
 console.log('Static documentation, metadata, links, and deployed browser module checks passed.')
