@@ -16,7 +16,9 @@
   `release-candidate/stackline-source-map-resolve-1.0.0.tgz`
 - candidate SHA-256:
   `77a62ce17a2a490d1c7525185216151ef60279634b37716f278a6f376aa17769`
-- publication status: NOT PUBLISHED; repository/CI/staging/production gates remain
+- publication status: exact immutable bytes published to Verdaccio and
+  official npm on 2026-08-27; official anonymous metadata propagation was
+  pending at the immediate post-publish checkpoint
 
 Do not recommend migration to a consumer whose declared runtime includes Node
 10 without an explicit runtime-floor decision. Do not claim byte-for-byte
@@ -24,7 +26,6 @@ Do not recommend migration to a consumer whose declared runtime includes Node
 Do not promise that consumer-owned ambient TypeScript shims can be removed
 without compiling that consumer against this exact candidate.
 
-An authorized release operator must use the existing candidate bytes, verify
-the complete platform matrix, install the digest into adoption targets, stage
-and smoke the scoped and alias forms, and only then consider publication. Do
-not rebuild between staging and production.
+Post-publication work must use the existing artifact bytes, finish the hosted
+platform matrix and public release surfaces, install the exact release into
+adoption targets, and never rebuild or republish version `1.0.0`.

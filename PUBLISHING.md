@@ -1,6 +1,7 @@
 # Publishing
 
-Publication is not authorized by this workspace state.
+`@stackline/source-map-resolve@1.0.0` has already been published from the
+immutable tarball recorded below. Never republish or rebuild this version.
 
 ## Release gate
 
@@ -14,13 +15,13 @@ platform jobs before creating a release artifact.
 
 ## Immutable artifact
 
-After review, `npm run artifact:prepare` creates `release-candidate/` exactly
-once and refuses to overwrite it. The directory contains one tarball, SHA-1,
-SHA-256, SHA-512 files, the complete npm inventory, a release manifest, and a
-CycloneDX production SBOM.
+`npm run artifact:prepare` created `release-candidate/` exactly once. The
+directory contains one tarball, SHA-1, SHA-256, SHA-512 files, the complete npm
+inventory, a release manifest, and a CycloneDX production SBOM.
 
-Publish those exact bytes to the staging registry first and verify scoped plus
-legacy-key alias consumers. Only separately authorized release work may publish
-the same bytes to official npm, create a GitHub release, or deploy production
-documentation. Never rebuild between registries or republish an existing
-version.
+The exact tarball was published to Verdaccio and then once to official npm on
+2026-08-27. Both registry downloads match SHA-1
+`a886d7156121d4b57dcb69b35b6033ef1385585c` and SHA-256
+`77a62ce17a2a490d1c7525185216151ef60279634b37716f278a6f376aa17769`.
+Post-publication work must resume from those bytes; version `1.0.0` is
+immutable.

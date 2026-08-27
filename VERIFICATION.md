@@ -43,6 +43,18 @@ The checksum files, package inventory, release manifest, and CycloneDX
 production SBOM are beside the tarball and were parsed or verified locally.
 The preparation script refuses to overwrite this directory.
 
+## Registry checkpoint — 2026-08-27
+
+- The exact tarball was published to Verdaccio, fetched back, byte-compared,
+  and installed both directly and through the historical-key npm alias.
+- The same tarball was published once to official npm. Its public tarball was
+  fetched back and byte-compared to the local and Verdaccio copies.
+- Official npm reports public access and the `latest` dist-tag as `1.0.0`.
+- Immediately after publication, anonymous packument reads returned a
+  transient CDN `E404` while the public tarball, authenticated dist-tag, and
+  access endpoints were already available. Continue retrying anonymous
+  metadata and clean consumer installation; never republish the version.
+
 ## Remaining external gates
 
 - Execute the checked-in Ubuntu/Windows Node 12, 14, 16, 18, 20, 22, and 24 CI
@@ -51,5 +63,6 @@ The preparation script refuses to overwrite this directory.
   build and tests. Existing ambient type declarations are not assumed removable.
 - `Raku/nqp` remains blocked while it supports Node 10.10; this package requires
   Node 12 or newer.
-- Separately authorized work must create repositories, stage/publish the exact
-  bytes, run `test:registry`, deploy docs, and contact consumers.
+- Create the public repository and immutable GitHub release, deploy and verify
+  production documentation, complete official-registry clean consumers after
+  metadata propagation, and contact only the qualified downstream targets.
