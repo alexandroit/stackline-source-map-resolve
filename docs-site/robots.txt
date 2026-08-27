@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alexandro.net/docs/vanilla/source-map-resolve/sitemap.xml

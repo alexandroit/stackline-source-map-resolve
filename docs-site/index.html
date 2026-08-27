@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compatibility documentation and browser workbench for @stackline/source-map-resolve.">
+  <link rel="canonical" href="https://alexandro.net/docs/vanilla/source-map-resolve/">
+  <link rel="stylesheet" href="./styles.css">
+  <title>@stackline/source-map-resolve</title>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@stackline/source-map-resolve","version":"{{PACKAGE_VERSION}}","codeRepository":"https://github.com/alexandroit/stackline-source-map-resolve","license":"https://spdx.org/licenses/MIT.html","programmingLanguage":"JavaScript","runtimePlatform":"Node.js 12+ and browsers"}
+  </script>
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Stackline maintained package · v{{PACKAGE_VERSION}}</p>
+    <h1>Resolve source maps without changing the contract.</h1>
+    <p class="lede">The seven-function CommonJS API of <code>source-map-resolve@0.6.0</code>, with real ESM, first-party types, and tested browser builds.</p>
+    <nav aria-label="Documentation">
+      <a href="#quick-start">Quick start</a>
+      <a href="#workbench">Workbench</a>
+      <a href="#compatibility">Compatibility</a>
+      <a href="#reference">Reference</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="quick-start">
+      <p class="section-number">01 / Install</p>
+      <h2>A narrow migration path</h2>
+      <pre><code>npm install @stackline/source-map-resolve</code></pre>
+      <p>Or retain the historical import through an npm alias:</p>
+      <pre><code>npm install source-map-resolve@npm:@stackline/source-map-resolve</code></pre>
+      <div class="callout">Runtime contract: Node.js 12 or newer. A package promising Node 10 must raise its floor before migration.</div>
+    </section>
+
+    <section id="workbench">
+      <p class="section-number">02 / Browser artifact</p>
+      <h2>Try the shipped resolver</h2>
+      <p>This workbench imports the same self-contained ESM browser file distributed in the package.</p>
+      <label for="code">Generated code with a source-map directive</label>
+      <textarea id="code" rows="8" spellcheck="false">console.log('hello')
+//# sourceMappingURL=data:application/json,%7B%22version%22%3A3%2C%22sources%22%3A%5B%22input.ts%22%5D%2C%22sourcesContent%22%3A%5B%22console.log('hello')%22%5D%2C%22names%22%3A%5B%5D%2C%22mappings%22%3A%22%22%7D</textarea>
+      <div class="controls">
+        <label for="code-url">Code URL</label>
+        <input id="code-url" value="https://example.test/assets/app.js">
+        <button id="resolve" type="button">Resolve map</button>
+      </div>
+      <pre class="result" id="result" aria-live="polite">Ready.</pre>
+    </section>
+
+    <section id="compatibility">
+      <p class="section-number">03 / Contract</p>
+      <h2>Compatibility has a boundary</h2>
+      <div class="grid">
+        <article><h3>Primary baseline</h3><p><code>source-map-resolve@0.6.0</code> defines runtime behavior, callback scheduling, error metadata, and the seven CommonJS exports.</p></article>
+        <article><h3>0.5.x consumers</h3><p><code>source-map-resolve@0.5.3</code> is separately characterized for shared APIs and ordinary cases. Old UMD bytes and dependency topology are not reproduced.</p></article>
+        <article><h3>Intentional correction</h3><p>Windows reader paths retain their drive designator. POSIX and network URL behavior stays aligned with 0.6.0.</p></article>
+        <article><h3>Known limitation</h3><p>Comment-like text inside strings may match. Inputs requiring grammar-level certainty should use a language-aware parser.</p></article>
+      </div>
+    </section>
+
+    <section id="reference">
+      <p class="section-number">04 / API</p>
+      <h2>Seven functions, additive packaging</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Function</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>resolveSourceMap</code></td><td>Find and read a map with a callback reader.</td></tr>
+          <tr><td><code>resolveSourceMapSync</code></td><td>Synchronous map lookup and parsing.</td></tr>
+          <tr><td><code>resolveSources</code></td><td>Resolve and optionally read every source.</td></tr>
+          <tr><td><code>resolveSourcesSync</code></td><td>Synchronous source resolution.</td></tr>
+          <tr><td><code>resolve</code></td><td>Resolve a map and its sources asynchronously.</td></tr>
+          <tr><td><code>resolveSync</code></td><td>Synchronous combined resolver.</td></tr>
+          <tr><td><code>parseMapToJSON</code></td><td>Strip the XSSI prefix and parse map JSON.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="links"><a href="./README.md">Complete README</a><a href="./COMPATIBILITY_CONTRACT.md">Compatibility contract</a><a href="./MIGRATION.md">Migration</a><a href="./SECURITY.md">Security</a><a href="./LICENSE">License</a></p>
+    </section>
+  </main>
+
+  <footer><span>@stackline/source-map-resolve {{PACKAGE_VERSION}}</span><span>MIT · independent continuation</span></footer>
+  <script type="module" src="./app.js"></script>
+  <script src="./analytics.js" defer></script>
+</body>
+</html>

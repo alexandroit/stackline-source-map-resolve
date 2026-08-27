@@ -1,0 +1,12 @@
+@stackline/source-map-resolve is an independent maintained continuation of
+source-map-resolve. It is not affiliated with or endorsed by Simon Lydell or
+the upstream project.
+
+The implementation and compatibility tests derive from the MIT-licensed
+source-map-resolve project:
+
+Copyright (c) 2014-2020 Simon Lydell
+Copyright (c) 2019 ZHAO Jinxiang
+
+See LICENSE for the complete upstream and Stackline MIT terms and
+THIRD_PARTY_LICENSES.md for the production dependency graph.

@@ -1,0 +1,9 @@
+# @stackline/source-map-resolve
+
+Compatibility-first continuation of source-map-resolve@0.6.0. Runtime: Node.js >=12 and browsers. Seven CommonJS functions are preserved; ESM, TypeScript declarations, and browser artifacts are additive. The 0.5.3 baseline covers shared ordinary behavior only.
+
+- [README](./README.md)
+- [Compatibility contract](./COMPATIBILITY_CONTRACT.md)
+- [Migration](./MIGRATION.md)
+- [Security](./SECURITY.md)
+- [License](./LICENSE)

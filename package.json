@@ -1,0 +1,154 @@
+{
+  "name": "@stackline/source-map-resolve",
+  "version": "1.0.0",
+  "description": "Compatibility-first source map and source resolver with maintained packaging, browser builds, and first-party types",
+  "type": "commonjs",
+  "main": "./index.js",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "browser": {
+        "import": "./dist/source-map-resolve.browser.mjs",
+        "require": "./dist/source-map-resolve.browser.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./index": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "browser": {
+        "import": "./dist/source-map-resolve.browser.mjs",
+        "require": "./dist/source-map-resolve.browser.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./index.js": {
+      "types": {
+        "import": "./index.d.mts",
+        "require": "./index.d.cts",
+        "default": "./index.d.ts"
+      },
+      "browser": {
+        "import": "./dist/source-map-resolve.browser.mjs",
+        "require": "./dist/source-map-resolve.browser.cjs"
+      },
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "browser": "./dist/source-map-resolve.browser.cjs",
+  "unpkg": "./dist/source-map-resolve.global.js",
+  "jsdelivr": "./dist/source-map-resolve.global.js",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.cts",
+    "index.d.mts",
+    "examples",
+    "CHANGELOG.md",
+    "COMPATIBILITY_CONTRACT.md",
+    "LICENSE",
+    "MIGRATION.md",
+    "NOTICE",
+    "README.md",
+    "SECURITY.md",
+    "THIRD_PARTY_LICENSES.md"
+  ],
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "node scripts/build.mjs",
+    "lint": "eslint index.js index.mjs scripts test examples docs-site",
+    "test:upstream": "tape test/upstream/index.js test/upstream/read.js",
+    "test:windows": "tape test/upstream/windows.js && node --test test/windows-cross-drive.test.js",
+    "test:differential": "node test/differential.js",
+    "test:contract": "node --test test/contract.test.js test/malformed-security.test.js test/stress.test.js",
+    "test:browser": "node scripts/check-browser.mjs",
+    "test:esm": "node test/esm.mjs",
+    "test:types": "node node_modules/typescript-3-9/bin/tsc -p test/types/tsconfig.legacy.json && node node_modules/typescript/bin/tsc -p test/types/tsconfig.commonjs.json && node node_modules/typescript/bin/tsc -p test/types/tsconfig.modern.json",
+    "test:runtime": "node test/runtime-compat.js",
+    "test": "npm run test:upstream && npm run test:windows && npm run test:differential && npm run test:contract && npm run test:browser && npm run test:esm && npm run test:types && npm run test:runtime",
+    "test:coverage": "c8 --all --include=index.js --check-coverage --lines 95 --functions 95 --branches 90 tape test/upstream/index.js test/upstream/read.js test/upstream/windows.js && c8 report --check-coverage --lines 95 --functions 95 --branches 90",
+    "test:smoke": "node scripts/smoke-install.mjs",
+    "test:registry": "node scripts/smoke-registry.mjs",
+    "test:docs": "npm run docs:build && npm run docs:check",
+    "check:package": "publint && attw --pack .",
+    "check:licenses": "node scripts/check-licenses.mjs",
+    "pack:check": "npm pack --dry-run",
+    "artifact:prepare": "node scripts/create-artifact.mjs",
+    "audit:dependencies": "npm audit --omit=dev --audit-level=low",
+    "audit:all": "npm audit --audit-level=low",
+    "audit:signatures": "npm audit signatures",
+    "docs:build": "npm run build && node scripts/build-docs.mjs",
+    "docs:check": "node scripts/check-docs.mjs",
+    "docs:serve": "node scripts/serve-docs.mjs",
+    "verify": "npm run clean && npm run lint && npm run build && npm test && npm run test:coverage && npm run test:smoke && npm run check:package && npm run pack:check && npm run check:licenses && npm run test:docs && npm run audit:dependencies && npm run audit:all && npm run audit:signatures",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandroit/stackline-source-map-resolve.git"
+  },
+  "homepage": "https://alexandro.net/docs/vanilla/source-map-resolve/",
+  "bugs": {
+    "url": "https://github.com/alexandroit/stackline-source-map-resolve/issues"
+  },
+  "keywords": [
+    "source-map",
+    "sourcemap",
+    "resolver",
+    "sourceMappingURL",
+    "browser",
+    "typescript",
+    "stackline"
+  ],
+  "author": "Stackline Maintainers",
+  "contributors": [
+    "Simon Lydell",
+    "ZHAO Jinxiang"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "atob": "2.1.2",
+    "decode-uri-component": "0.2.2"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@eslint/js": "10.0.1",
+    "c8": "12.0.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.9.1",
+    "path-browserify": "1.0.1",
+    "publint": "0.3.24",
+    "setimmediate": "1.0.5",
+    "source-map-resolve-0-5-baseline": "npm:source-map-resolve@0.5.3",
+    "source-map-resolve-baseline": "npm:source-map-resolve@0.6.0",
+    "tape": "5.10.2",
+    "typescript": "7.0.2",
+    "typescript-3-9": "npm:typescript@3.9.10",
+    "url": "0.11.4"
+  }
+}
