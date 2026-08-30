@@ -2,6 +2,9 @@
 
 Compatibility-first continuation of source-map-resolve@0.6.0. Runtime: Node.js >=12 and browsers. Seven CommonJS functions are preserved; ESM, TypeScript declarations, and browser artifacts are additive. The 0.5.3 baseline covers shared ordinary behavior only.
 
+Version 1.0.1 has no production, optional, or peer dependencies. It preserves
+the historical direct and npm-alias import paths.
+
 - [README](./README.md)
 - [Compatibility contract](./COMPATIBILITY_CONTRACT.md)
 - [Migration](./MIGRATION.md)

@@ -1,21 +1,22 @@
 # Dependency Decisions
 
-Observation date: 2026-08-27.
+Observation date: 2026-08-30.
 
 ## Production graph
 
-| Dependency | Upstream range | Stackline version | Decision |
+| Former dependency | 1.0.0 version | 1.0.1 decision |
 | --- | --- | --- | --- |
-| `atob` | `^2.1.2` | `2.1.2` | Exact-pin the patched compatible release. |
-| `decode-uri-component` | `^0.2.0` | `0.2.2` | Exact-pin above the historical `<0.2.1` advisory range. |
+| `atob` | `2.1.2` | Remove the edge; use `Buffer.from` or native browser `atob`. |
+| `decode-uri-component` | `0.2.2` | Remove the edge; maintain the compatible decoder in-tree under MIT. |
 
-A clean upstream install currently resolves these same patched versions and
-has zero production audit findings. Exact pins are a reproducibility and
-regression boundary, not a claim that the current upstream install is
-vulnerable.
+The current `decode-uri-component@0.5.0` release is maintained, but is ESM-only
+and requires Node 14.16. Replacing the CommonJS dependency directly would break
+the supported Node 12 contract. Keeping `0.2.2` would retain a stale production
+edge. Maintaining the compatible decoder in-tree preserves the public contract
+without transferring that lifecycle risk to consumers.
 
-The production graph has three nodes including the root package, with zero
-optional and peer dependencies.
+The production graph has one node: the root package. Optional and peer
+dependency counts remain zero.
 
 ## Removed 0.5.x graph
 

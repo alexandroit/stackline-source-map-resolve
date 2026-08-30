@@ -1,25 +1,15 @@
 import assert from 'node:assert/strict'
-import { readdir, readFile } from 'node:fs/promises'
+import { readFile } from 'node:fs/promises'
 
 const root = new URL('../', import.meta.url)
-const expected = new Map([
-  ['atob', { version: '2.1.2', licenses: ['MIT', 'Apache-2.0'] }],
-  ['decode-uri-component', { version: '0.2.2', licenses: ['MIT'] }]
-])
-
-for (const [name, contract] of expected) {
-  const directory = new URL(`node_modules/${name}/`, root)
-  const manifest = JSON.parse(await readFile(new URL('package.json', directory), 'utf8'))
-  assert.equal(manifest.version, contract.version, `${name} version drifted`)
-  const license = String(manifest.license || manifest.licenses || '')
-  for (const identifier of contract.licenses) {
-    assert.ok(license.includes(identifier), `${name} does not declare ${identifier}`)
-  }
-  const files = await readdir(directory)
-  assert.ok(files.some((file) => /^licen[cs]e/i.test(file)), `${name} has no installed license file`)
-}
+const manifest = JSON.parse(await readFile(new URL('package.json', root), 'utf8'))
+assert.equal(manifest.dependencies, undefined)
+assert.equal(manifest.optionalDependencies, undefined)
+assert.equal(manifest.peerDependencies, undefined)
 
 const thirdParty = await readFile(new URL('THIRD_PARTY_LICENSES.md', root), 'utf8')
-for (const name of expected.keys()) assert.ok(thirdParty.includes('`' + name + '`'))
+assert.match(thirdParty, /Copyright \(c\) 2017, Sam Verschueren/)
+assert.match(thirdParty, /Permission is hereby granted, free of charge/)
+assert.match(thirdParty, /Version 1\.0\.1 has no production, optional, or peer dependencies/)
 
-console.log('Exact production dependency versions and installed license files verified.')
+console.log('Vendored license attribution and zero-dependency production graph verified.')

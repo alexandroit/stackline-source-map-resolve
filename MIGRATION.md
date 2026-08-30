@@ -12,6 +12,9 @@ No CommonJS source change is required. Run the consumer's map-reading and
 debugger tests, especially Windows paths, reader error handling, embedded maps,
 and source-root overrides.
 
+Version 1.0.1 changes no public function or import. A clean lockfile should no
+longer contain `atob` or `decode-uri-component` beneath this package.
+
 ## From 0.5.3 or another 0.5.x release
 
 Before using the alias:

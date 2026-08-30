@@ -100,3 +100,40 @@ test('decodes URL paths while preserving literal plus signs', function () {
   })
   assert.equal(seen, 'https://example.test/maps and+plus/app.js.map')
 })
+
+test('preserves tolerant URI decoding across valid and malformed byte sequences', function () {
+  var cases = [
+    ['hello%20world.map', 'hello world.map'],
+    ['a+b.map', 'a+b.map'],
+    ['%G0.map', '%G0.map'],
+    ['%C3%A5.map', '\u00E5.map'],
+    ['%E0%A4%A.map', '%E0%A4%A.map'],
+    ['%FE%FF.map', '\uFFFD\uFFFD.map'],
+    ['%fe%ff.map', '%fe%ff.map'],
+    ['%C2.map', '\uFFFD.map'],
+    ['%c2.map', '%c2.map'],
+    ['%80.map', '%80.map'],
+    ['%F0%9F%92%A9.map', '\uD83D\uDCA9.map'],
+    ['a%20b%ZZc.map', 'a b%ZZc.map']
+  ]
+
+  cases.forEach(function (entry) {
+    var seen
+    api.resolveSourceMapSync('//# sourceMappingURL=' + entry[0], 'https://example.test/', function (url) {
+      seen = url
+      return '{}'
+    })
+    assert.equal(seen, 'https://example.test/' + entry[1])
+  })
+})
+
+test('decodes UTF-8 base64 maps without an installed atob package', function () {
+  var map = JSON.stringify({ version: 3, sources: ['f\u00F8\u00F8.ts'], mappings: '' })
+  var encoded = Buffer.from(map, 'utf8').toString('base64')
+  var result = api.resolveSourceMapSync(
+    '//# sourceMappingURL=data:application/json;base64,' + encoded,
+    'https://example.test/app.js',
+    function () { throw new Error('reader should not run') }
+  )
+  assert.deepEqual(result.map, JSON.parse(map))
+})

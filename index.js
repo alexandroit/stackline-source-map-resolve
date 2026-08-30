@@ -1,12 +1,133 @@
 'use strict'
+/* global self */
 
-var atob = require('atob')
 var urlLib = require('url')
 var pathLib = require('path')
-var decodeUriComponentLib = require('decode-uri-component')
+
+var hexPairMatcher = /^[a-f\d]{2}$/i
+
+function parsePercentByte (input, position) {
+  if (input.codePointAt(position) !== 37 || position + 3 > input.length) return null
+  var digits = input.slice(position + 1, position + 3)
+  if (!hexPairMatcher.test(digits)) return null
+  return { byte: Number.parseInt(digits, 16), next: position + 3 }
+}
+
+function utf8SequenceLength (byte) {
+  if (byte <= 0x7F) return 1
+  if (byte >= 0xC2 && byte <= 0xDF) return 2
+  if (byte >= 0xE0 && byte <= 0xEF) return 3
+  if (byte >= 0xF0 && byte <= 0xF4) return 4
+  return 0
+}
+
+function isContinuationByte (byte) {
+  return byte >= 0x80 && byte <= 0xBF
+}
+
+// Preserve tolerant URI behavior with one non-recursive pass over malformed input.
+function decodePercentRun (input) {
+  try {
+    return decodeURIComponent(input)
+  } catch {
+    var output = []
+    var position = 0
+
+    while (position < input.length) {
+      if (input.codePointAt(position) !== 37) {
+        output.push(input.charAt(position++))
+        continue
+      }
+
+      var firstByte = parsePercentByte(input, position)
+      if (!firstByte) {
+        output.push(input.charAt(position++))
+        continue
+      }
+
+      var byteOrderMark = input.slice(position, position + 6)
+      if (byteOrderMark === '%FE%FF' || byteOrderMark === '%FF%FE') {
+        output.push('\uFFFD\uFFFD')
+        position += 6
+        continue
+      }
+
+      var sequenceLength = utf8SequenceLength(firstByte.byte)
+      if (sequenceLength === 0) {
+        output.push(input.slice(position, position + 3))
+        position += 3
+        continue
+      }
+
+      var end = firstByte.next
+      var validSequence = true
+      for (var index = 1; index < sequenceLength; index++) {
+        var nextByte = parsePercentByte(input, end)
+        if (!nextByte || !isContinuationByte(nextByte.byte)) {
+          validSequence = false
+          break
+        }
+        end = nextByte.next
+      }
+
+      if (validSequence) {
+        var decodedSequence
+        try {
+          decodedSequence = decodeURIComponent(input.slice(position, end))
+        } catch (error) {
+          decodedSequence = error
+        }
+        if (typeof decodedSequence === 'string') {
+          output.push(decodedSequence)
+          position = end
+          continue
+        }
+      }
+
+      output.push(input.slice(position, position + 3) === '%C2' ? '\uFFFD' : input.slice(position, position + 3))
+      position += 3
+    }
+
+    return output.join('')
+  }
+}
+
+function decodeUriComponent (input) {
+  if (typeof input !== 'string') {
+    throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof input + '`')
+  }
+
+  try {
+    return decodeURIComponent(input)
+  } catch {
+    return decodePercentRun(input)
+  }
+}
+
+function decodeBase64Binary (base64) {
+  var root = typeof globalThis === 'object'
+    ? globalThis
+    : typeof self === 'object'
+      ? self
+      : typeof window === 'object'
+        ? window
+        : {}
+
+  if (root.Buffer && typeof root.Buffer.from === 'function') {
+    return root.Buffer.from(base64, 'base64').toString('binary')
+  }
+  if (typeof root.atob === 'function') return root.atob(base64)
+  throw new TypeError('Base64 decoding is not available in this runtime')
+}
 
 function resolveUrl () {
   return Array.prototype.reduce.call(arguments, function (resolved, nextUrl) {
+    if (/^[a-z][a-z\d+.-]*:\/\//i.test(resolved) || /^file:/i.test(resolved)) {
+      return new URL(nextUrl, resolved).toString()
+    }
+    if (/^[a-z][a-z\d+.-]*:\/\//i.test(nextUrl) || /^file:/i.test(nextUrl)) {
+      return new URL(nextUrl).toString()
+    }
     return urlLib.resolve(resolved, nextUrl)
   })
 }
@@ -21,8 +142,7 @@ function convertWindowsPath (aPath) {
 }
 
 function customDecodeUriComponent (string) {
-  // decode-uri-component turns `+` into a space, which is not URL-path behavior.
-  return decodeUriComponentLib(string.replace(/\+/g, '%2B'))
+  return decodeUriComponent(string.replace(/\+/g, '%2B'))
 }
 
 function callbackAsync (callback, error, result) {
@@ -108,7 +228,7 @@ var jsonMimeTypeRegex = /^(?:application|text)\/json$/
 var jsonCharacterEncoding = 'utf-8'
 
 function base64ToBuf (base64) {
-  var binary = atob(base64)
+  var binary = decodeBase64Binary(base64)
   var array = new Uint8Array(binary.length)
   for (var index = 0; index < binary.length; index++) {
     array[index] = binary.charCodeAt(index)
@@ -118,7 +238,7 @@ function base64ToBuf (base64) {
 
 function decodeBase64String (base64) {
   if (typeof TextDecoder === 'undefined' || typeof Uint8Array === 'undefined') {
-    return atob(base64)
+    return decodeBase64Binary(base64)
   }
   var decoder = new TextDecoder(jsonCharacterEncoding, { fatal: true })
   return decoder.decode(base64ToBuf(base64))

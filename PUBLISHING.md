@@ -3,6 +3,11 @@
 `@stackline/source-map-resolve@1.0.0` has already been published from the
 immutable tarball recorded below. Never republish or rebuild this version.
 
+Version 1.0.1 is the dependency-closure remediation. It may be published only
+from a new immutable artifact after the full platform matrix proves the empty
+production graph, direct and alias installs emit no warnings, `npm ls` reports
+no problems, and `npm audit --omit=dev` reports zero vulnerabilities.
+
 ## Release gate
 
 ```sh
@@ -15,7 +20,8 @@ platform jobs before creating a release artifact.
 
 ## Immutable artifact
 
-`npm run artifact:prepare` created `release-candidate/` exactly once. The
+For each version, `npm run artifact:prepare` creates `release-candidate/`
+exactly once. The
 directory contains one tarball, SHA-1, SHA-256, SHA-512 files, the complete npm
 inventory, a release manifest, and a CycloneDX production SBOM.
 

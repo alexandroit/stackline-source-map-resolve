@@ -9,6 +9,16 @@ test('scans a two-million-character no-map input without recursion or failure', 
   assert.equal(api.resolveSourceMapSync(code, 'https://example.test/app.js', function () {}), null)
 })
 
+test('decodes a large malformed URL in one bounded pass', function () {
+  var malformed = new Array(50001).join('%E0x') + '.map'
+  var seen
+  api.resolveSourceMapSync('//# sourceMappingURL=' + malformed, 'https://example.test/', function (url) {
+    seen = url
+    return '{}'
+  })
+  assert.equal(seen, 'https://example.test/' + malformed)
+})
+
 test('resolves ten thousand source URLs without reading when read is null', function () {
   var sources = []
   for (var index = 0; index < 10000; index++) sources.push('src/' + index + '.js')

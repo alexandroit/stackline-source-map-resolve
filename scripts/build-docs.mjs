@@ -47,6 +47,7 @@ await writeFile(new URL('package-meta.json', output), `${JSON.stringify({
   name: manifest.name,
   node: manifest.engines.node,
   primaryBaseline: 'source-map-resolve@0.6.0',
+  productionDependencies: Object.keys(manifest.dependencies || {}).length,
   secondaryBaseline: 'source-map-resolve@0.5.3',
   version: manifest.version
 }, null, 2)}\n`)

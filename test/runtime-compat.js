@@ -6,10 +6,7 @@ var direct = require('../index.js')
 
 assert.equal(manifest.name, '@stackline/source-map-resolve')
 assert.equal(manifest.engines.node, '>=12')
-assert.deepEqual(manifest.dependencies, {
-  atob: '2.1.2',
-  'decode-uri-component': '0.2.2'
-})
+assert.equal(manifest.dependencies, undefined)
 assert.equal(manifest.optionalDependencies, undefined)
 assert.equal(manifest.peerDependencies, undefined)
 assert.deepEqual(Object.keys(direct), [

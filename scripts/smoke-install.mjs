@@ -59,7 +59,8 @@ try {
       '@stackline/source-map-resolve': `file:${tarball}`
     }
   }))
-  run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund'])
+  const installation = run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund'])
+  assert.doesNotMatch(installation.stdout + installation.stderr, /\b(?:warn(?:ing)?|deprecated)\b/i)
 
   run(process.execPath, ['--input-type=commonjs', '-e', [
     "const api = require('@stackline/source-map-resolve')",
@@ -82,19 +83,24 @@ try {
   run(process.execPath, [path.join(installed, 'examples', 'esm.mjs')])
 
   const installedManifest = JSON.parse(await readFile(path.join(installed, 'package.json'), 'utf8'))
-  assert.deepEqual(installedManifest.dependencies, {
-    atob: '2.1.2',
-    'decode-uri-component': '0.2.2'
-  })
+  assert.equal(installedManifest.version, '1.0.1')
+  assert.equal(installedManifest.dependencies, undefined)
   assert.equal(installedManifest.optionalDependencies, undefined)
   assert.equal(installedManifest.peerDependencies, undefined)
-  const atobManifest = JSON.parse(await readFile(path.join(temporary, 'node_modules', 'atob', 'package.json'), 'utf8'))
-  const decodeManifest = JSON.parse(await readFile(path.join(temporary, 'node_modules', 'decode-uri-component', 'package.json'), 'utf8'))
-  assert.equal(atobManifest.version, '2.1.2')
-  assert.equal(decodeManifest.version, '0.2.2')
+  const tree = JSON.parse(run('npm', ['ls', '--omit=dev', '--all', '--json']).stdout)
+  assert.equal(tree.problems, undefined)
+  assert.deepEqual(tree.dependencies, {
+    '@stackline/source-map-resolve': {
+      version: '1.0.1',
+      resolved: `file:${tarball}`,
+      overridden: false
+    }
+  })
+  const audit = JSON.parse(run('npm', ['audit', '--omit=dev', '--json']).stdout)
+  assert.equal(audit.metadata.vulnerabilities.total, 0)
 } finally {
   if (tarball) await rm(tarball, { force: true })
   await rm(temporary, { force: true, recursive: true })
 }
 
-console.log('Packed CJS, ESM, deep-entry, examples, inventory, and exact production dependency checks passed.')
+console.log('Packed CJS, ESM, deep-entry, examples, inventory, and zero-dependency production checks passed.')

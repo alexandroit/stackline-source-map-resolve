@@ -33,6 +33,11 @@ assert.equal(result.map.version, 3)
 assert.equal(result.sourcesResolved[0], 'https://example.test/input.ts')
 assert.equal(result.sourcesContent[0], 'source')
 
+const unicodeMap = JSON.stringify({ version: 3, sources: ['f\u00F8\u00F8.ts'], mappings: '' })
+const unicodeCode = `//# sourceMappingURL=data:application/json;base64,${Buffer.from(unicodeMap).toString('base64')}`
+const unicodeResult = api.resolveSourceMapSync(unicodeCode, 'https://example.test/app.js', () => '')
+assert.equal(unicodeResult.map.sources[0], 'f\u00F8\u00F8.ts')
+
 await new Promise((resolve, reject) => {
   let returned = false
   api.resolveSourceMap('', 'https://example.test/app.js', () => {

@@ -14,11 +14,11 @@ The latest published `1.x` release is supported on Node 12 and newer.
 
 ## Dependency statement
 
-Production dependencies are exact-pinned to `atob@2.1.2` and
-`decode-uri-component@0.2.2`. Both are the audited patched versions and a clean
-production install currently has no known npm audit finding. Historical
-advisories affecting older versions must not be represented as vulnerabilities
-in a current clean upstream installation.
+Version 1.0.1 has no production, optional, or peer dependencies. Base64 uses
+the runtime primitive (`Buffer.from` in Node.js and `atob` in browsers), and
+the tolerant URI decoder is maintained in-tree. A clean direct or historical
+alias install must emit no dependency warnings, produce a valid npm tree, and
+report zero production audit findings.
 
 ## Input boundary
 

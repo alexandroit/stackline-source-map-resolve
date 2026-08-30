@@ -43,6 +43,10 @@ const sourceMapResolve = require('source-map-resolve')
 The legacy-key alias changes package resolution only; application imports do
 not need to change.
 
+Version 1.0.1 installs with no production, optional, or peer dependencies.
+Base64 decoding uses the runtime primitive, and tolerant URI decoding is
+maintained inside the package under its retained MIT attribution.
+
 ## CommonJS
 
 ```js
@@ -152,11 +156,10 @@ See [COMPATIBILITY_CONTRACT.md](./COMPATIBILITY_CONTRACT.md) and
 
 ## Security
 
-Current clean installation of upstream resolves patched dependency versions;
-this project does not claim otherwise. Stackline exact-pins those same audited
-versions to prevent historical vulnerable releases from re-entering through
-range drift. Report suspected vulnerabilities privately as described in
-[SECURITY.md](./SECURITY.md).
+The production graph contains only this package. Release gates require a
+warning-free packed install, a valid npm tree, and zero production audit
+findings for both direct and historical-key alias consumers. Report suspected
+vulnerabilities privately as described in [SECURITY.md](./SECURITY.md).
 
 ## License
 

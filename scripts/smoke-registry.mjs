@@ -21,8 +21,8 @@ try {
   await writeFile(path.join(temporary, 'package.json'), JSON.stringify({
     private: true,
     dependencies: {
-      '@stackline/source-map-resolve': '1.0.0',
-      'source-map-resolve': 'npm:@stackline/source-map-resolve@1.0.0'
+      '@stackline/source-map-resolve': '1.0.1',
+      'source-map-resolve': 'npm:@stackline/source-map-resolve@1.0.1'
     }
   }))
   run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', `--registry=${registry}`])

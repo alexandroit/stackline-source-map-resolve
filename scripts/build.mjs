@@ -21,9 +21,7 @@ for (const file of [
 }
 
 const runtime = manifest.dependencies || {}
-if (runtime.atob !== '2.1.2' || runtime['decode-uri-component'] !== '0.2.2') {
-  throw new Error('Runtime dependencies must remain exact-pinned to the audited patched versions.')
-}
+if (Object.keys(runtime).length !== 0) throw new Error('The production dependency graph must remain empty.')
 if (Object.keys(manifest.optionalDependencies || {}).length !== 0 || Object.keys(manifest.peerDependencies || {}).length !== 0) {
   throw new Error('Optional and peer dependency counts must remain zero.')
 }
