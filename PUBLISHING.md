@@ -1,12 +1,8 @@
 # Publishing
 
-`@stackline/source-map-resolve@1.0.0` has already been published from the
-immutable tarball recorded below. Never republish or rebuild this version.
-
-Version 1.0.1 is the dependency-closure remediation. It may be published only
-from a new immutable artifact after the full platform matrix proves the empty
-production graph, direct and alias installs emit no warnings, `npm ls` reports
-no problems, and `npm audit --omit=dev` reports zero vulnerabilities.
+`@stackline/source-map-resolve@1.0.1` was published on 2026-08-30 from the
+single immutable tarball recorded below. Never republish or rebuild this
+version. A future release must use a new version and repeat every gate.
 
 ## Release gate
 
@@ -25,9 +21,9 @@ exactly once. The
 directory contains one tarball, SHA-1, SHA-256, SHA-512 files, the complete npm
 inventory, a release manifest, and a CycloneDX production SBOM.
 
-The exact tarball was published to Verdaccio and then once to official npm on
-2026-08-27. Both registry downloads match SHA-1
-`a886d7156121d4b57dcb69b35b6033ef1385585c` and SHA-256
-`77a62ce17a2a490d1c7525185216151ef60279634b37716f278a6f376aa17769`.
-Post-publication work must resume from those bytes; version `1.0.0` is
-immutable.
+The exact 1.0.1 tarball was published to Verdaccio and then once to official
+npm on 2026-08-30. Both registry downloads match SHA-1
+`4727eabebade91c29f0565e2a6e59330f4041a7c` and SHA-256
+`fc543f0e987fa6ea6937254f27a545191e6395ab3f9f60e0c50429689af0073e`.
+Post-publication work must resume from those bytes; versions `1.0.0` and
+`1.0.1` are immutable.
