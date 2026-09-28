@@ -37,7 +37,7 @@ assert.doesNotMatch(Array.from(contents.values()).join('\n'), /localhost|UPSTREA
 
 const metadata = JSON.parse(contents.get('package-meta.json'))
 assert.equal(metadata.name, '@stackline/source-map-resolve')
-assert.equal(metadata.version, '1.0.1')
+assert.equal(metadata.version, '1.0.2')
 assert.equal(metadata.node, '>=12')
 assert.equal(metadata.productionDependencies, 0)
 assert.match(metadata.browserArtifactSha256, /^[a-f0-9]{64}$/)

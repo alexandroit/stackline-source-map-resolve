@@ -83,7 +83,7 @@ try {
   run(process.execPath, [path.join(installed, 'examples', 'esm.mjs')])
 
   const installedManifest = JSON.parse(await readFile(path.join(installed, 'package.json'), 'utf8'))
-  assert.equal(installedManifest.version, '1.0.1')
+  assert.equal(installedManifest.version, '1.0.2')
   assert.equal(installedManifest.dependencies, undefined)
   assert.equal(installedManifest.optionalDependencies, undefined)
   assert.equal(installedManifest.peerDependencies, undefined)
@@ -91,7 +91,7 @@ try {
   assert.equal(tree.problems, undefined)
   assert.deepEqual(tree.dependencies, {
     '@stackline/source-map-resolve': {
-      version: '1.0.1',
+      version: '1.0.2',
       resolved: `file:${tarball}`,
       overridden: false
     }

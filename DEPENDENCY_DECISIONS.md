@@ -35,3 +35,22 @@ production dependencies and are represented by the generated bundle notices.
 Lint, coverage, browser bundling, TypeScript 3.9/current, package analysis,
 packed consumers, license checks, audits, signatures, and SBOM generation are
 development-only. `package-lock.json` records their exact transitive graph.
+
+## 2026-09-28 development fixture advisory
+
+The two exact upstream comparison fixtures, `source-map-resolve@0.5.3` and
+`source-map-resolve@0.6.0`, retain their historical CommonJS decoder dependency.
+That development-only dependency is affected by
+[GHSA-vcc3-ghjq-m6fr](https://github.com/advisories/GHSA-vcc3-ghjq-m6fr).
+The patched decoder 0.5.0 is ESM and cannot be substituted into these frozen
+CommonJS fixtures without changing the comparison baseline. Tests use bounded,
+repository-controlled fixture data; these packages are not included in the
+published runtime closure.
+
+The maintained runtime already decodes malformed percent sequences in one
+non-recursive pass and has malformed-input and stress regression coverage.
+`audit:all` first requires a clean production audit, then permits only this
+exact advisory on the three development fixture paths. Any new advisory,
+non-development path, or registry/audit error fails the gate. The remaining
+fixture advisory is reported explicitly rather than described as a clean full
+audit. The development `qs` dependency is pinned to the patched 6.16.0 release.

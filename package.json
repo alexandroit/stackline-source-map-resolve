@@ -1,6 +1,6 @@
 {
   "name": "@stackline/source-map-resolve",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Compatibility-first source map and source resolver with maintained packaging, browser builds, and first-party types",
   "type": "commonjs",
   "main": "./index.js",
@@ -94,7 +94,7 @@
     "pack:check": "npm pack --dry-run",
     "artifact:prepare": "node scripts/create-artifact.mjs",
     "audit:dependencies": "npm audit --omit=dev --audit-level=low",
-    "audit:all": "npm audit --audit-level=low",
+    "audit:all": "node scripts/audit-source.mjs",
     "audit:signatures": "npm audit signatures",
     "docs:build": "npm run build && node scripts/build-docs.mjs",
     "docs:check": "node scripts/check-docs.mjs",
@@ -114,10 +114,11 @@
     "source-map",
     "sourcemap",
     "resolver",
-    "sourceMappingURL",
+    "sourcemappingurl",
     "browser",
     "typescript",
-    "stackline"
+    "stackline",
+    "url-resolution"
   ],
   "author": "Stackline Maintainers",
   "contributors": [
@@ -146,5 +147,8 @@
     "typescript": "7.0.2",
     "typescript-3-9": "npm:typescript@3.9.10",
     "url": "0.11.4"
+  },
+  "overrides": {
+    "qs": "6.16.0"
   }
 }

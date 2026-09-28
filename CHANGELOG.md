@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2] - 2026-09-28
+
+- Organize package documentation, preserve API and migration examples, and add Stackline community links.
+- Update the development-only qs parser to 6.16.0; preserve the existing runtime dependency contract.
+- Improve package discovery keywords with precise domain terms and `stackline`.
+- Pin GitHub Actions release tooling and require an explicit missing-version response before publication.
+
+
 ## 1.0.1 - 2026-08-30
 
 - Remove both production dependency edges while preserving Node 12, CommonJS,
