@@ -11,7 +11,7 @@
 **[Issues](https://github.com/alexandroit/stackline-source-map-resolve/issues)** |
 **[Repository](https://github.com/alexandroit/stackline-source-map-resolve)**
 
-**Package version:** `1.0.2`
+**Package version:** `1.0.3`
 
 ## Why this package?
 
@@ -27,7 +27,7 @@ Lydell or the upstream project.
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/source-map-resolve@1.0.2` |
+| Package | `@stackline/source-map-resolve@1.0.3` |
 | Node.js runtime | `>=12` |
 | CommonJS / primary entry | `./index.js` |
 | ES module entry | `./index.mjs` |

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-09-29
+
+- Use verified Stackline forks of path-browserify, url, and setimmediate through exact npm aliases, preserving imports and the Node 12 API.
+- Keep the frozen upstream comparison fixtures unchanged and explicitly report their existing development-only decoder advisory.
+- Publish the tested CI archive with provenance and an immutable release; include actual browser bundle materials in the release SBOM.
+
 ## [1.0.2] - 2026-09-28
 
 - Organize package documentation, preserve API and migration examples, and add Stackline community links.

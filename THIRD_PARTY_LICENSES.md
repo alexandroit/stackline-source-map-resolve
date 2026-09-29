@@ -44,6 +44,17 @@ SOFTWARE.
 
 ## Production dependency graph
 
-Version 1.0.1 has no production, optional, or peer dependencies. Node.js uses
+Version 1.0.3 has no production, optional, or peer dependencies. Node.js uses
 `Buffer.from` and browsers use their native `atob` implementation; no code from
 the former `atob` package is installed or bundled.
+
+## Browser bundle materials
+
+The browser build uses `@stackline/path-browserify@1.0.0` under the existing
+`path-browserify` import and `@stackline/url@1.0.0` under `url`. These independent
+MIT maintenance forks preserve the upstream authors and license notices.
+Their code and contributing dependencies are bundled, despite the empty
+installed production graph. Bundle notices are retained in the generated
+artifacts; `bundled-sbom.cdx.json` in the immutable release records the actual
+contributing npm components, versions, licenses and integrity values.
+`@stackline/setimmediate@1.0.0` is used only by tests and is not bundled.

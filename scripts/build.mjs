@@ -34,13 +34,14 @@ const shared = {
     url: 'url'
   },
   bundle: true,
+  metafile: true,
   legalComments: 'eof',
   minify: true,
   platform: 'browser',
   target: ['es2018']
 }
 
-await Promise.all([
+const builds = await Promise.all([
   build({
     ...shared,
     entryPoints: [fileURLToPath(new URL('index.mjs', root))],
@@ -61,6 +62,14 @@ await Promise.all([
     outfile: fileURLToPath(new URL('source-map-resolve.global.js', output))
   })
 ])
+
+const contributingInputs = [...new Set(builds.flatMap(result =>
+  Object.values(result.metafile.outputs).flatMap(artifact =>
+    Object.entries(artifact.inputs).filter(([, value]) => value.bytesInOutput > 0).map(([name]) => name)
+  )
+))].sort()
+await mkdir(new URL('build-evidence/', root), { recursive: true })
+await writeFile(new URL('build-evidence/browser-inputs.json', root), JSON.stringify(contributingInputs, null, 2) + '\n')
 
 await writeFile(new URL('build-meta.json', output), `${JSON.stringify({
   browserArtifacts: 3,

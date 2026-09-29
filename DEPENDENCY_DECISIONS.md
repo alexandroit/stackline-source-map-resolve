@@ -54,3 +54,15 @@ exact advisory on the three development fixture paths. Any new advisory,
 non-development path, or registry/audit error fails the gate. The remaining
 fixture advisory is reported explicitly rather than described as a clean full
 audit. The development `qs` dependency is pinned to the patched 6.16.0 release.
+
+## 2026-09-29 direct dependency maintenance
+
+The exact aliases `path-browserify: npm:@stackline/path-browserify@1.0.0`,
+`url: npm:@stackline/url@1.0.0`, and
+`setimmediate: npm:@stackline/setimmediate@1.0.0` preserve the existing import
+names. The first two contribute code to browser bundles; the build records
+actual contributing input files and the immutable release includes their
+resolved names, versions, integrity and licenses in `bundled-sbom.cdx.json`.
+Setimmediate is used only by tests. The installed production graph remains
+empty. The historical upstream oracles and the narrow advisory gate above
+remain unchanged; the full source audit is not described as zero findings.

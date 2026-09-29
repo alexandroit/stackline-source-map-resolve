@@ -27,3 +27,15 @@ npm on 2026-08-30. Both registry downloads match SHA-1
 `fc543f0e987fa6ea6937254f27a545191e6395ab3f9f60e0c50429689af0073e`.
 Post-publication work must resume from those bytes; versions `1.0.0` and
 `1.0.1` are immutable.
+
+## Maintained GitHub Actions releases
+
+For 1.0.3 and later, require successful CI and CodeQL for the exact main-branch
+commit. Review the CI artifact SHA-512 and dispatch publish.yml with ci_run_id
+and expected_sha512. Publication downloads that CI archive without repacking,
+checks its manifest and digest, and publishes only an absent version through
+GitHub Actions with npm provenance. Direct and aliased registry consumers,
+cryptographic signatures, provenance identity and exact bytes gate the
+immutable GitHub release. Existing versions and tags are never replaced.
+The production SBOM and actual browser material SBOM are separate release
+assets. The pre-existing development fixture advisory stays explicit.

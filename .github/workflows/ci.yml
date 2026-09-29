@@ -19,7 +19,15 @@ jobs:
           cache: npm
       - run: npm install --global npm@11.19.0
       - run: npm ci --ignore-scripts
+      - run: node --test scripts/registry-requests.test.mjs
       - run: npm run verify
+      - name: Preserve the tested release archive
+        run: mkdir artifact && npm pack --ignore-scripts --pack-destination artifact
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: npm-package
+          path: artifact/*.tgz
+          if-no-files-found: error
 
   supported-runtime:
     strategy:
