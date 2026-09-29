@@ -1,6 +1,6 @@
 {
   "name": "@stackline/source-map-resolve",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Compatibility-first source map and source resolver with maintained packaging, browser builds, and first-party types",
   "type": "commonjs",
   "main": "./index.js",
@@ -112,13 +112,16 @@
     "url": "https://github.com/alexandroit/stackline-source-map-resolve/issues"
   },
   "keywords": [
+    "stackline",
+    "npm-package",
+    "source-map-resolve",
+    "browser",
     "source-map",
+    "typescript",
+    "nodejs",
     "sourcemap",
     "resolver",
     "sourcemappingurl",
-    "browser",
-    "typescript",
-    "stackline",
     "url-resolution"
   ],
   "author": "Stackline Maintainers",
