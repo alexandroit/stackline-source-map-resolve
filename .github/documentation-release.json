@@ -1,0 +1,29 @@
+{
+  "repository": "alexandroit/stackline-source-map-resolve",
+  "packages": [
+    {
+      "name": "@stackline/source-map-resolve",
+      "path": "README.md",
+      "version": "1.0.4",
+      "baselineVersion": "1.0.3",
+      "keywords": [
+        "stackline",
+        "npm-package",
+        "source-map-resolve",
+        "browser",
+        "source-map",
+        "typescript",
+        "nodejs",
+        "sourcemap",
+        "resolver",
+        "sourcemappingurl",
+        "url-resolution"
+      ],
+      "homepage": "https://alexandro.net/docs/vanilla/source-map-resolve/",
+      "baselineTarball": "https://registry.npmjs.org/@stackline/source-map-resolve/-/source-map-resolve-1.0.3.tgz",
+      "baselineIntegrity": "sha512-zH6DbOM06BM9RBCTJ8TxLrmjsimkgFuGmhKBm2ddeV1kWtTQDTahCIvDo5ene2N8OBBrP1LqQPsFHYX7him76Q==",
+      "expectedSha512": "0024bafd694ddc447113790f41b194c2e9eefbe5f1d3259c2f7764bf523f2637c222dcf29d8da037feaefa94f2d0629a4f75b35580a55afcea7fe2455863d815",
+      "tag": "docs-stackline-source-map-resolve-v1.0.4"
+    }
+  ]
+}
