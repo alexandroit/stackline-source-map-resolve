@@ -1,6 +1,6 @@
 {
   "name": "@stackline/source-map-resolve",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Compatibility-first source map and source resolver with maintained packaging, browser builds, and first-party types",
   "type": "commonjs",
   "main": "./index.js",

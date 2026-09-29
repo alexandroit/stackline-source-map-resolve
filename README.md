@@ -4,13 +4,13 @@
 
 [![npm version](https://img.shields.io/npm/v/@stackline/source-map-resolve.svg?style=flat-square)](https://www.npmjs.com/package/@stackline/source-map-resolve)
 [![license](https://img.shields.io/npm/l/@stackline/source-map-resolve.svg?style=flat-square)](https://github.com/alexandroit/stackline-source-map-resolve)
-[![GitHub repository](https://img.shields.io/badge/GitHub-alexandroit%2Fstackline-source-map-resolve-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-source-map-resolve)
+[![GitHub repository](https://img.shields.io/badge/GitHub-repository-181717?style=flat-square&logo=github)](https://github.com/alexandroit/stackline-source-map-resolve)
 [![Docs](https://img.shields.io/badge/docs-alexandro.net-0f766e?style=flat-square)](https://alexandro.net/docs/vanilla/source-map-resolve/)
 [![Reddit community](https://img.shields.io/badge/community-r%2FStackline-ff4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/r/Stackline/)
 
 **[Documentation](https://alexandro.net/docs/vanilla/source-map-resolve/)** | **[npm](https://www.npmjs.com/package/@stackline/source-map-resolve)** | **[Issues](https://github.com/alexandroit/stackline-source-map-resolve/issues)** | **[Repository](https://github.com/alexandroit/stackline-source-map-resolve)**
 
-**Current package version:** `1.0.4`
+**Current package version:** `1.0.5`
 
 ---
 
@@ -28,7 +28,7 @@ Lydell or the upstream project.
 
 | Item | Value |
 | --- | --- |
-| Package | `@stackline/source-map-resolve@1.0.4` |
+| Package | `@stackline/source-map-resolve@1.0.5` |
 | Node.js runtime | `>=12` |
 | CommonJS / primary entry | `./index.js` |
 | ES module entry | `./index.mjs` |
