@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
+const release = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 const output = new URL('../site-dist/', import.meta.url)
 const required = [
   'CHANGELOG.md',
@@ -37,7 +38,7 @@ assert.doesNotMatch(Array.from(contents.values()).join('\n'), /localhost|UPSTREA
 
 const metadata = JSON.parse(contents.get('package-meta.json'))
 assert.equal(metadata.name, '@stackline/source-map-resolve')
-assert.equal(metadata.version, '1.0.3')
+assert.equal(metadata.version, release.version)
 assert.equal(metadata.node, '>=12')
 assert.equal(metadata.productionDependencies, 0)
 assert.match(metadata.browserArtifactSha256, /^[a-f0-9]{64}$/)

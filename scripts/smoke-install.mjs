@@ -6,6 +6,7 @@ import os from 'node:os'
 import path from 'node:path'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
+const release = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 const temporary = await mkdtemp(path.join(os.tmpdir(), 'stackline-source-map-resolve-pack-'))
 let tarball
 
@@ -83,7 +84,7 @@ try {
   run(process.execPath, [path.join(installed, 'examples', 'esm.mjs')])
 
   const installedManifest = JSON.parse(await readFile(path.join(installed, 'package.json'), 'utf8'))
-  assert.equal(installedManifest.version, '1.0.3')
+  assert.equal(installedManifest.version, release.version)
   assert.equal(installedManifest.dependencies, undefined)
   assert.equal(installedManifest.optionalDependencies, undefined)
   assert.equal(installedManifest.peerDependencies, undefined)
@@ -91,7 +92,7 @@ try {
   assert.equal(tree.problems, undefined)
   assert.deepEqual(tree.dependencies, {
     '@stackline/source-map-resolve': {
-      version: '1.0.3',
+      version: release.version,
       resolved: `file:${tarball}`,
       overridden: false
     }

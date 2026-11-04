@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 
+const release = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'))
 const registry = process.env.STACKLINE_REGISTRY
 assert.ok(registry, 'STACKLINE_REGISTRY is required for the post-publication registry smoke test')
 
@@ -21,8 +22,8 @@ try {
   await writeFile(path.join(temporary, 'package.json'), JSON.stringify({
     private: true,
     dependencies: {
-      '@stackline/source-map-resolve': '1.0.3',
-      'source-map-resolve': 'npm:@stackline/source-map-resolve@1.0.3'
+      '@stackline/source-map-resolve': release.version,
+      'source-map-resolve': `npm:@stackline/source-map-resolve@${release.version}`
     }
   }))
   run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', `--registry=${registry}`])

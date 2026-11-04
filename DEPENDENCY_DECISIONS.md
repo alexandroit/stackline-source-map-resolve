@@ -66,3 +66,31 @@ resolved names, versions, integrity and licenses in `bundled-sbom.cdx.json`.
 Setimmediate is used only by tests. The installed production graph remains
 empty. The historical upstream oracles and the narrow advisory gate above
 remain unchanged; the full source audit is not described as zero findings.
+
+## 2026-11-04 fixture-only advisory review
+
+The immutable 0.5.3/0.6.0 comparison fixtures also inherit high-severity
+[GHSA-qr28-fpjm-wq7f](https://github.com/advisories/GHSA-qr28-fpjm-wq7f),
+fixed upstream in decoder 0.5.1. Replacing their historical CommonJS decoder
+would change the independent comparison oracle; the earlier 0.5.0 release
+only fixed GHSA-vcc3-ghjq-m6fr. Both advisories remain real in decoder 0.2.2.
+The raw development audit reports two high-severity package findings (the
+decoder and its source-map-resolve parent), not a clean full audit.
+
+Only test/differential.js and test/windows-cross-drive.test.js load the
+baselines, using bounded, repository-controlled inputs. The maintained
+index.js decoder advances one position per pass, emits chunks, and joins once;
+it has neither the recursive split nor a full-string replacement per distinct
+encoded run. Existing malformed-input/stress tests exercise only that runtime.
+Production installs have no dependency edges. Measured browser inputs and
+packed inventories exclude the fixtures and decoder package.
+
+The exception expires 2026-12-04 and requires exact baseline and decoder
+versions, decoder integrity, development-only paths, only the two reviewed
+advisories, no additional decoder consumers, no production dependencies, and
+no fixture browser material. Unknown advisories, paths, versions, graph
+changes, or registry failures reject the gate. Negative policy tests run as
+part of audit:all. The raw counts and accepted advisories remain visible.
+
+Browser build aliases now use published @stackline/path-browserify and
+@stackline/url 1.0.2; test-only @stackline/setimmediate also uses 1.0.2.

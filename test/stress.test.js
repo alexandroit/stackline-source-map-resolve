@@ -48,3 +48,19 @@ test('resolves two thousand embedded sources asynchronously', async function () 
     })
   })
 })
+
+test('decodes many distinct encoded runs and preserves a malformed suffix', function () {
+  var encoded = []
+  var decoded = []
+  for (var index = 0; index < 2048; index++) {
+    var value = String.fromCodePoint(0x1000 + index)
+    encoded.push(encodeURIComponent(value) + 'x')
+    decoded.push(value + 'x')
+  }
+  var seen
+  api.resolveSourceMapSync('//# sourceMappingURL=' + encoded.join('') + '%zz.map', 'https://example.test/', function (url) {
+    seen = url
+    return '{}'
+  })
+  assert.equal(seen, 'https://example.test/' + decoded.join('') + '%zz.map')
+})

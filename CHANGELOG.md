@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.6 - 2026-11-04
+
+- Refresh published Stackline aliases and the development dependency closure.
+- Use patched current Node.js release gates while preserving historical runtime and compiler coverage.
+- Check package and documentation versions against the release manifest.
+
 ## [1.0.3] - 2026-09-29
 
 - Use verified Stackline forks of path-browserify, url, and setimmediate through exact npm aliases, preserving imports and the Node 12 API.

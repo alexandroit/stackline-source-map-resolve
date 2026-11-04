@@ -241,7 +241,7 @@ MIT. Upstream copyright and attribution are retained in [LICENSE](https://github
 
 ## Maintenance and compatibility notes
 
-The runtime audit is clean for the reviewed release. Historical decode-uri-component comparison fixtures in development retain two moderate findings; those fixtures stay independent of the implementation under test.
+The runtime audit is clean for the reviewed release. Historical decode-uri-component comparison fixtures in development retain two high-severity package findings from GHSA-vcc3-ghjq-m6fr and GHSA-qr28-fpjm-wq7f; those fixtures stay independent of the implementation under test.
 
 ## Credits and original authors
 

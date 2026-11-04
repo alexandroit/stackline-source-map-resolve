@@ -22,7 +22,7 @@ export async function createBundledSbom ({ sourceCommit, timestamp }) {
   for (const [key, expected] of [['path-browserify', '@stackline/path-browserify'], ['url', '@stackline/url']]) {
     assert(contributing.has(`node_modules/${key}`))
     assert.equal(lock.packages[`node_modules/${key}`].name, expected)
-    assert.equal(lock.packages[`node_modules/${key}`].version, '1.0.0')
+    assert.equal(lock.packages[`node_modules/${key}`].version, '1.0.2')
   }
   assert(!contributing.has('node_modules/setimmediate'), 'Test-only polyfill must not enter browser material')
   const components = [...contributing].sort().map(installedPath => {
